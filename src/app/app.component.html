@@ -16,29 +16,17 @@
         <a class="nav-link">Braingear</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" routerLink="/design-philosophy" routerLinkActive="active">Design Philosophy</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/skill-set" routerLinkActive="active">Skill Set</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link">Coming soon...</a>
       </li>
     </ul>
   </div>
 </nav>
 <main class="container" role="main">
-  <div class="col-md-8 mx-auto my-5">
-    <h1>Designs by Avin</h1>
-    <p>A collection of websites and applications designed to modern standards</p>
-  </div>
-  <div class="row">
-    <div class="col-md-6 my-5">
-      <h2>Angular Demo</h2>
-      <p>A single page application utilizing the Angular 6 framework. Coded in TypeScript, HTML and CSS</p>
-      <a href="/angular-demo/">
-      <div class="col-md-10 mx-auto my-5 p-3 app-showcase">
-        <img src="../assets/gms.jpg">
-      </div>
-      </a>
-    </div>
-    <div class="col-md-6 my-5">
-      <h2>Braingear</h2>
-      <p>A cross-platform ready mobile application utilizing the the Xamarin framework. Coded in C#</p>
-    </div>
-  </div>
-</main>
+  <router-outlet></router-outlet>
+  </main>
