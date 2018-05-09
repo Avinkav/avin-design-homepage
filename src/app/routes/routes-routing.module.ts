@@ -5,7 +5,8 @@ import { HomeComponent } from '../home/home.component';
 import { SkillsComponent } from '../skills/skills.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent, pathMatch: 'full' },
   { path: 'design-philosophy', component: DesignPhilosophyComponent },
   { path: 'skill-set', component: SkillsComponent },
 ];

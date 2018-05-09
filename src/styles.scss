@@ -1,4 +1,7 @@
 @import '~@angular/material/theming';
+
+$progress-bar-bg:#009688;
+
 @import "~bootstrap/scss/bootstrap";
 
 body {
@@ -10,7 +13,7 @@ body {
       background-color: #ad1457;
       @include mat-elevation(2);
   }
-
+ 
   .app-showcase{
     @include mat-elevation-transition;
     @include mat-elevation(1);
@@ -22,4 +25,8 @@ body {
 
   .app-showcase img{
     width: 100%;
+  }
+
+  .progress{
+    height: 3px;
   }
