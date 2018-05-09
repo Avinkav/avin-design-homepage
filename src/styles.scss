@@ -1,0 +1,25 @@
+@import '~@angular/material/theming';
+@import "~bootstrap/scss/bootstrap";
+
+body {
+    min-height: 75rem;
+    padding-top: 4.5rem;
+  }
+
+  .navbar-dark{
+      background-color: #ad1457;
+      @include mat-elevation(2);
+  }
+
+  .app-showcase{
+    @include mat-elevation-transition;
+    @include mat-elevation(1);
+  
+    &:hover {
+      @include mat-elevation(4);
+    }
+  }
+
+  .app-showcase img{
+    width: 100%;
+  }
