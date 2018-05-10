@@ -71,6 +71,10 @@ frameworks = [{
   tag: 'ASP.NET',
   level: '86%'
 },
+{
+  tag: 'Node.js',
+  level: '91%'
+},
 ];
 
 patterns = [
@@ -89,6 +93,10 @@ patterns = [
 {
   tag: 'Material Design',
   level: '83%'
+},
+{
+  tag: 'RESTful APIs',
+  level: '64%'
 },
 ];
 
