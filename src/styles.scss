@@ -15,11 +15,13 @@ body {
   }
  
   .app-showcase{
+    overflow: hidden;
+    border-radius: 1px;
     @include mat-elevation-transition;
-    @include mat-elevation(1);
+    @include mat-elevation(2);
   
     &:hover {
-      @include mat-elevation(4);
+      @include mat-elevation(6);
     }
   }
 
