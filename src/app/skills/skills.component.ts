@@ -38,7 +38,7 @@ export class SkillsComponent implements OnInit {
  ];
 
  clouds = [{
-  tag: 'Amazon Web Services',
+  tag: 'Amazon EC2',
   level: '54%'
 },
 {
@@ -48,11 +48,7 @@ export class SkillsComponent implements OnInit {
 {
   tag: 'Google Cloud Platform',
   level: '42%'
-},
-{
-  tag: 'Docker',
-  level: '28%'
-},
+}
 ];
 
 frameworks = [{
@@ -61,11 +57,11 @@ frameworks = [{
 },
 {
   tag: 'Angular 6',
-  level: '93%'
+  level: '71%'
 },
 {
   tag: 'Xamarin.Android',
-  level: '90%'
+  level: '84%'
 },
 {
   tag: 'ASP.NET',
@@ -73,7 +69,7 @@ frameworks = [{
 },
 {
   tag: 'Node.js',
-  level: '91%'
+  level: '76%'
 },
 ];
 
