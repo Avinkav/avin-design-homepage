@@ -6,9 +6,14 @@ import { RoutesRoutingModule } from './routes/routes-routing.module';
 import { HomeComponent } from './home/home.component';
 import { SkillsComponent } from './skills/skills.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
-import 'bootstrap';
 import { PortfolioComponent } from './portfolio/portfolio.component';
+import { ListComponent } from './list/list.component';
+import { SafeHTMLPipe } from './pipes/safe-html.pipe';
+import { ItemComponent } from './portfolio/item/item.component';
+import { EditorComponent } from './editor/editor.component';
+import { FormsModule } from '@angular/forms';
+import { QuillModule } from 'ngx-quill';
+import 'bootstrap';
 
 @NgModule({
   declarations: [
@@ -16,12 +21,18 @@ import { PortfolioComponent } from './portfolio/portfolio.component';
     DesignPhilosophyComponent,
     HomeComponent,
     SkillsComponent,
-    PortfolioComponent
+    PortfolioComponent,
+    ListComponent,
+    SafeHTMLPipe,
+    ItemComponent,
+    EditorComponent
   ],
   imports: [
     BrowserModule,
     RoutesRoutingModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    QuillModule,
+    FormsModule
   ],
   providers: [Title],
   bootstrap: [AppComponent]

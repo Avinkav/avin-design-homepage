@@ -4,13 +4,19 @@ import { DesignPhilosophyComponent } from '../design-philosophy/design-philosoph
 import { HomeComponent } from '../home/home.component';
 import { SkillsComponent } from '../skills/skills.component';
 import { PortfolioComponent } from '../portfolio/portfolio.component';
+import { ItemComponent } from '../portfolio/item/item.component';
+import { EditorComponent } from '../editor/editor.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent, pathMatch: 'full' },
-  { path: 'design-philosophy', component: DesignPhilosophyComponent },
-  { path: 'skill-set', component: SkillsComponent },
-  { path: 'portfolio', component: PortfolioComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'portfolio', component: PortfolioComponent, children: [
+    { path: ':id', component: ItemComponent },
+
+  ]},
+  { path: 'editor', component: EditorComponent },
+  //{ path: 'design-philosophy', component: DesignPhilosophyComponent },
+  //{ path: 'skill-set', component: SkillsComponent },
 ];
 
 @NgModule({

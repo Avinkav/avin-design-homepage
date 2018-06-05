@@ -1,1 +1,1 @@
-export const MAIN_TITLE = 'Designed by Avin';
+export const MAIN_TITLE = 'Avin Kavish';

@@ -1,7 +1,7 @@
 @import '~@angular/material/theming';
 
 $body-bg:#f2f2f2;
-$theme-colors: ( "primary": #ad1457, "success": #009688 );
+$theme-colors: ( "primary": #1b5e20, "success": #009688 );
 $progress-bar-bg:#009688;
 
 
@@ -49,3 +49,12 @@ p{
   border-radius: 0.2rem;
   
 }
+
+.flex-spacer{
+  flex-grow: 1;
+}
+
+.ql-container{
+  background-color: white;
+}
+

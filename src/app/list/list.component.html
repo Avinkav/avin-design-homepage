@@ -1,0 +1,8 @@
+<div *ngFor="let post of posts">
+  <h4>{{ post.Title }}</h4>
+  <div class="d-flex mb-3">
+    <div class="mr-3">{{ post.Author }}</div>
+    <div>{{ post.CreatedAt | date }}</div>
+  </div>
+  <p>{{ post.Content }}</p>
+</div>
