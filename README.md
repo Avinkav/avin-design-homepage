@@ -1,6 +1,6 @@
-# AvinDesign
+# My Blog
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
+Noting much. Just an SPA blog.
 
 ## Development server
 
