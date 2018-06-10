@@ -1,24 +1,27 @@
 @import '~@angular/material/theming';
-
 $body-bg:#f2f2f2;
-$theme-colors: ( "primary": #1b5e20, "success": #009688 );
+$theme-colors: ( "primary": #1b5e20, "success": #009688);
 $progress-bar-bg:#009688;
-
-
 @import "~bootstrap/scss/bootstrap";
+@import 'onepage.scss';
 @import "~open-iconic/font/css/open-iconic-bootstrap.scss";
 
 body {
   min-height: 75rem;
-  padding-top: 4.5rem;
 }
 
-p{
-  font-size:0.9rem;
+p {
+  font-size: 0.9rem;
 }
 
-.oi{
-  color:#009688;
+.navbar {
+  padding-top: 1rem;
+  padding-bottom: 0;
+}
+
+.navbar .navbar-brand {
+  margin-top: -1rem;
+  
 }
 
 .navbar-dark {
@@ -40,21 +43,50 @@ p{
   width: 100%;
 }
 
+.card {
+  border: unset;
+  border-radius: 0.2rem;
+}
+
+.dropdown-menu {
+  padding: 0;
+  background-color: theme-color-level(primary, 0);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1.5rem;
+  color: rgba(255, 255, 255, 0.7);
+  transition: background-color 200ms;
+  &:hover {
+    color: rgba(255, 255, 255, 0.7);
+    background-color: theme-color-level(primary, 5);
+  }
+  &.active {
+    background-color: theme-color-level(primary, 5);
+  }
+}
+
+.flex-spacer {
+  flex-grow: 1;
+}
+
+.navbar-nav .btn {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.oi {
+  color: #009688;
+}
+
 .progress {
   height: 3px;
 }
 
-.card{
-  border: unset;
-  border-radius: 0.2rem;
-  
-}
-
-.flex-spacer{
-  flex-grow: 1;
-}
-
-.ql-container{
+.ql-container {
   background-color: white;
 }
-

@@ -6,11 +6,12 @@ import { SkillsComponent } from '../skills/skills.component';
 import { PortfolioComponent } from '../portfolio/portfolio.component';
 import { ItemComponent } from '../portfolio/item/item.component';
 import { EditorComponent } from '../editor/editor.component';
+import { OnePageComponent } from '../one-page/one-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: 'portfolio', component: PortfolioComponent, children: [
+  { path: 'home', component: OnePageComponent },
+  { path: 'projects', component: PortfolioComponent, children: [
     { path: ':id', component: ItemComponent },
 
   ]},

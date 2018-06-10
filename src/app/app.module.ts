@@ -14,6 +14,13 @@ import { EditorComponent } from './editor/editor.component';
 import { FormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill';
 import 'bootstrap';
+import { OnePageComponent } from './one-page/one-page.component';
+import { CoverComponent } from './one-page/cover/cover.component';
+import { GmsComponent } from './one-page/gms/gms.component';
+import { OnePageDirective } from './directives/one-page.directive';
+import { OnePageSectionDirective } from './directives/one-page-section.directive';
+import { OnePageDownDirective } from './directives/one-page-down.directive';
+import { OnePageUpDirective } from './directives/one-page-up.directive';
 
 @NgModule({
   declarations: [
@@ -25,7 +32,14 @@ import 'bootstrap';
     ListComponent,
     SafeHTMLPipe,
     ItemComponent,
-    EditorComponent
+    EditorComponent,
+    OnePageComponent,
+    CoverComponent,
+    GmsComponent,
+    OnePageDirective,
+    OnePageSectionDirective,
+    OnePageDownDirective,
+    OnePageUpDirective
   ],
   imports: [
     BrowserModule,

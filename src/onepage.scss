@@ -1,0 +1,43 @@
+.one-page-section {
+  height: 100vh; //calc(100vh - 4rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content-full {
+  height: 100vh; //calc(100vh - 4rem);
+  padding: 1rem 0rem;
+  justify-content: space-between;
+}
+
+@mixin one-page-arrow {
+  cursor: pointer;
+  position: fixed;
+  width: 24px;
+  height: 24px;
+  left: 50%;
+  margin-left: -12px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 1500;
+}
+
+.one-page-down-arrow {
+  @include one-page-arrow;
+  bottom: 1rem;
+  background-image: url('assets/expand_more.svg');
+}
+
+.one-page-up-arrow {
+  @include one-page-arrow;
+  top: 1rem;
+  background-image: url('assets/expand_less.svg');
+}
