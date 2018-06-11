@@ -60,23 +60,13 @@ export class OnePageDirective implements AfterViewInit, OnDestroy {
     // set up assisted-scrolling
     this.$windowScroll = fromEvent(window, 'scroll');
     this.scrollEvents = this.$windowScroll.pipe(
-      debounceTime(this.delay),
-      filter((event: any) => this.calcSectionY() > this.halfway))
+      debounceTime(this.delay))
       .subscribe(
         event => {
-          console.log(event);
-          this.scrollDown();
+          this._sectionIndex = Math.round(this.ratio());
+          this.scroll.emit(this._sectionIndex);
+          this.scrollToSection(this._sectionIndex);
         });
-
-    const subscription = this.$windowScroll.pipe(
-      debounceTime(this.delay),
-      filter((event: any) => this.calcSectionY() < this.halfway))
-      .subscribe(
-        event => {
-          console.log(event);
-          this.scrollUp();
-        });
-    this.scrollEvents.add(subscription);
 
     // Add-handlers to arrows
     this.downArrows = Array.from(this.nativeEl.querySelectorAll(DOWN_SELECTOR));
@@ -87,25 +77,12 @@ export class OnePageDirective implements AfterViewInit, OnDestroy {
 
     this.checkArrows();
 
-    // this.anchorNodes = Array.from(this.nativeEl.querySelectorAll('.one-page-nav-item'));
-    // console.log(this.anchorNodes);
-    // this.anchorNodes = this.anchorNodes.map((node: any) => ({
-    //   left: node.offsetLeft,
-    //   width: node.offsetWidth
-    // }));
-
-    // this.anchorNodes.forEach( (node, index) => {
-    //   node.onclick = this.slideTo(index);
-    // });
-
-    // this.slideTo(0);
     this.cdRef.detectChanges();
     this.viewInitComplete = true;
   }
 
-  calcSectionY() {
-    return window.scrollY - this.pageOffsets.slice(0, this._sectionIndex)
-      .reduce((acc, val) => acc + val, 0);
+  ratio() {
+    return window.scrollY / window.innerHeight;
   }
 
   scrollDown() {
@@ -121,7 +98,11 @@ export class OnePageDirective implements AfterViewInit, OnDestroy {
   }
 
   scrollToSection(index: number) {
-    window.scrollTo({ left: 0, top: this.pageOffsets[index], behavior: 'smooth' });
+    window.scrollTo({
+      left: 0,
+      top: this.pageOffsets[index],
+      behavior: 'smooth'
+    });
     this.checkArrows();
   }
 
@@ -155,5 +136,4 @@ export class OnePageDirective implements AfterViewInit, OnDestroy {
     this.anchorNodes = null;
     this.nativeEl = null;
   }
-
 }

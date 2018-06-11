@@ -11,7 +11,8 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class OnePageNavComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Input() anchors = [{ title: 'home' }, { title: 'gms' }];
+  @Output() anchorClick = new EventEmitter();
+  @Input() anchors;
   @Input()
   public set sectionIndex(val: number) {
     this._sectionIndex = val;
@@ -21,19 +22,16 @@ export class OnePageNavComponent implements OnInit, AfterViewInit, OnDestroy {
   public get sectionIndex(): number {
     return this._sectionIndex;
   }
+  _sectionIndex: number;
 
-  _sectionIndex = 0;
-
-  @Output() anchorClick = new EventEmitter();
   indicatorLeft = '0px';
   indicatorWidth = '0px';
-  anchorEls;
+  anchorEls: any[];
 
   constructor(private el: ElementRef, private cdRef: ChangeDetectorRef) {
   }
 
-  clickAnchor(index: number, $event) {
-    const anchor = $event.originalTarget;
+  clickAnchor(index: number) {
     this.anchorClick.emit(index);
     this.moveSlider(index);
     return false;
@@ -43,7 +41,6 @@ export class OnePageNavComponent implements OnInit, AfterViewInit, OnDestroy {
     // Check for DOM access
     if (!this.anchorEls)
       return;
-    console.log(this.anchorEls);
     this.indicatorWidth = `${this.anchorEls[index].offsetWidth}px`;
     this.indicatorLeft = `translateX(${this.anchorEls[index].offsetLeft}px)`;
   }
@@ -53,20 +50,20 @@ export class OnePageNavComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.anchorEls = Array.from(this.el.nativeElement.querySelectorAll('.one-page-nav-item'))
-      .map((node: any) => ({ offsetWidth: node.offsetWidth, offsetLeft: node.offsetLeft }));
+      .map((node: any) => ({
+        offsetWidth: node.offsetWidth,
+        offsetLeft: node.offsetLeft
+      }));
 
     this.moveSlider(this._sectionIndex);
-    const totalwidth = this.anchorEls.reduce((val, acc) => val.offsetWidth + acc, 0);
-    const scrollheight = window.innerHeight;
-    // this.indicatorLeft = `translateX(${totalwidth * this.ratio()}px)`;
-    // const eventSubscriptions = fromEvent(window, 'scroll').pipe().subscribe(event => console.log(this.ratio()));
+    const totalwidth = this.anchorEls.reduce((acc, val) => val.offsetWidth + acc, 0);
   }
 
   ratio() {
-    return (this.anchors.length * window.innerHeight - window.scrollY) / (this.anchors.length * window.innerHeight) ;
+    return (window.scrollY / window.innerHeight) / this.anchorEls.length;
   }
 
   ngOnDestroy() {
-
+    this.anchorEls = null;
   }
 }
