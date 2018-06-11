@@ -13,12 +13,15 @@ import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
   selector: PAGE_SELECTOR
 })
 export class OnePageDirective implements AfterViewInit, OnDestroy {
+  
+  @Output() scroll = new EventEmitter<number>();
   @Input() delay = 1000;
   @Input()
   public set sectionIndex(index: number) {
     if (index > -1 && this.viewInitComplete) {
       this._sectionIndex = index;
       this.scrollToSection(index);
+      this.checkArrows();
     }
   }
 
@@ -26,7 +29,6 @@ export class OnePageDirective implements AfterViewInit, OnDestroy {
     return this._sectionIndex;
   }
 
-  @Output() scroll = new EventEmitter<number>();
   _sectionIndex = 0;
 
   pageOffsets: number[];
@@ -107,22 +109,19 @@ export class OnePageDirective implements AfterViewInit, OnDestroy {
   }
 
   checkArrows() {
-    if (this._sectionIndex === 0)
-      this.upArrows.forEach(arrow => {
-        arrow.style.display = 'none';
-      });
-    if (this._sectionIndex === 1)
-      this.upArrows.forEach(arrow => {
-        arrow.style.display = 'block';
-      });
-    if (this._sectionIndex === this.pageOffsets.length - 2)
-      this.downArrows.forEach(arrow => {
-        arrow.style.display = 'block';
-      });
-    if (this._sectionIndex === this.pageOffsets.length - 1)
-      this.downArrows.forEach(arrow => {
-        arrow.style.display = 'none';
-      });
+    switch (this._sectionIndex) {
+      case 0:
+        this.upArrows.forEach(arrow => arrow.style.display = 'none');
+        this.downArrows.forEach(arrow => arrow.style.display = 'block');
+        break;
+      case this.pageOffsets.length - 1:
+        this.upArrows.forEach(arrow => arrow.style.display = 'block');
+        this.downArrows.forEach(arrow => arrow.style.display = 'none');
+        break;
+      default:
+        [...this.upArrows, ...this.downArrows].forEach(arrow => arrow.style.display = 'block');
+        break;
+    }
   }
 
   ngOnDestroy() {
