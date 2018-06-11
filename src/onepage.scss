@@ -1,3 +1,12 @@
+// http://www.color-hex.com/color-palette/61507
+:root {
+  --color1: #484f93;
+  --color2: #00a655;
+  --color3: #f2ef0c;
+  --color4: #ee7b11;
+  --color5: #ea3033;
+}
+
 .one-page-section {
   height: 100vh; //calc(100vh - 4rem);
   display: flex;
@@ -40,4 +49,32 @@
   @include one-page-arrow;
   top: 1rem;
   background-image: url('assets/expand_less.svg');
+}
+
+.one-page-nav {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+}
+
+.one-page-indicator{
+  height: 2px;
+  background-color: rgba(240, 240, 240, 0.911);
+  border-radius: 2px;
+  position: relative;
+  transition: transform 130ms ease-in-out, width 130ms;
+}
+
+.one-page-nav-item{
+  padding: 1rem 0.5rem;
+  //padding: 4px;
+  color: rgb(15, 15, 15);
+  font-size: 1.4rem;
+  font-weight: 300;
+  transition: color ease-in 250ms;
+
+  &:hover{
+    color: rgb(196, 196, 196);
+    text-decoration: none;
+  }
 }

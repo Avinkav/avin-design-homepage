@@ -1,10 +1,16 @@
-<div ngxOnePage>
+<div ngxOnePage [sectionIndex]="sectionIndex" (scroll)="sectionIndex = $event">
   <div ngxOnePageUp></div>
+  <ngx-one-page-nav (anchorClick)="sectionIndex = $event" [sectionIndex]="sectionIndex" [anchors]="anchors"></ngx-one-page-nav>
   <app-cover ngxOnePageSection></app-cover>
   <app-gms ngxOnePageSection></app-gms>
+  <div ngxOnePageSection style="background-color:var(--color4);">
+    <div class="content">
+      There's more...
+    </div>
+  </div>
   <div ngxOnePageSection>
     <div class="content">
-      Content grows out from the center
+      more...
     </div>
   </div>
   <div ngxOnePageDown></div>

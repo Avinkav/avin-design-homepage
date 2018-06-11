@@ -8,7 +8,7 @@ import { ItemComponent } from '../portfolio/item/item.component';
 import { EditorComponent } from '../editor/editor.component';
 import { OnePageComponent } from '../one-page/one-page.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: OnePageComponent },
   { path: 'projects', component: PortfolioComponent, children: [
@@ -20,8 +20,3 @@ const routes: Routes = [
   //{ path: 'skill-set', component: SkillsComponent },
 ];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class RoutesRoutingModule { }

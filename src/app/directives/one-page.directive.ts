@@ -1,35 +1,60 @@
-import { Directive, ElementRef, Output, TemplateRef, ViewContainerRef, AfterViewInit, Input, OnDestroy } from '@angular/core';
+import {
+  Directive, ElementRef, Output, TemplateRef, ViewContainerRef, AfterViewInit,
+  Input, OnDestroy, ChangeDetectorRef, EventEmitter
+} from '@angular/core';
 import { element } from 'protractor';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 import { filter, delay, debounceTime } from 'rxjs/operators';
 import { DOWN_SELECTOR, UP_SELECTOR, PAGE_SELECTOR } from './definitions';
+import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
 
 @Directive({
 
   selector: PAGE_SELECTOR
 })
 export class OnePageDirective implements AfterViewInit, OnDestroy {
+  @Input() delay = 1000;
+  @Input()
+  public set sectionIndex(index: number) {
+    if (index > -1 && this.viewInitComplete) {
+      this._sectionIndex = index;
+      this.scrollToSection(index);
+    }
+  }
+
+  public get sectionIndex(): number {
+    return this._sectionIndex;
+  }
+
+  @Output() scroll = new EventEmitter<number>();
+  _sectionIndex = 0;
+
   pageOffsets: number[];
   $windowScroll: Observable<Event>;
   scrollEvents: Subscription;
+  viewInitComplete = false;
 
   halfway = window.innerHeight / 2;
   current = 0;
-  pageIndex = 0;
-  @Input() delay = 1000;
 
-  constructor(private el: ElementRef, private viewContainer: ViewContainerRef) {
+  upArrows;
+  downArrows;
 
+  anchorNodes;
+  nativeEl;
+
+  constructor(el: ElementRef, private cdRef: ChangeDetectorRef) {
+    this.nativeEl = el.nativeElement;
   }
 
   ngAfterViewInit() {
     // If there is no DOM present, do not configure one-page effects. DOM's aren't present on web workers,
     // nor server-side renderers
-    if (!this.el.nativeElement)
+    if (!this.nativeEl)
       return;
 
     // get all section offsets
-    this.pageOffsets = Array.from(this.el.nativeElement.querySelectorAll('.one-page-section'))
+    this.pageOffsets = Array.from(this.nativeEl.querySelectorAll('.one-page-section'))
       .map((item: any) => item.offsetTop);
 
     // set up assisted-scrolling
@@ -54,34 +79,81 @@ export class OnePageDirective implements AfterViewInit, OnDestroy {
     this.scrollEvents.add(subscription);
 
     // Add-handlers to arrows
-    const downArrows = Array.from(this.el.nativeElement.querySelectorAll(DOWN_SELECTOR));
-    downArrows.forEach((arrow: any) => arrow.onclick = () => { this.scrollDown(); });
+    this.downArrows = Array.from(this.nativeEl.querySelectorAll(DOWN_SELECTOR));
+    this.downArrows.forEach((arrow: any) => arrow.onclick = () => { this.scrollDown(); });
 
-    const upArrows = Array.from(this.el.nativeElement.querySelectorAll(UP_SELECTOR));
-    upArrows.forEach((arrow: any) => arrow.onclick = () => { this.scrollUp(); });
+    this.upArrows = Array.from(this.nativeEl.querySelectorAll(UP_SELECTOR));
+    this.upArrows.forEach((arrow: any) => arrow.onclick = () => { this.scrollUp(); });
+
+    this.checkArrows();
+
+    // this.anchorNodes = Array.from(this.nativeEl.querySelectorAll('.one-page-nav-item'));
+    // console.log(this.anchorNodes);
+    // this.anchorNodes = this.anchorNodes.map((node: any) => ({
+    //   left: node.offsetLeft,
+    //   width: node.offsetWidth
+    // }));
+
+    // this.anchorNodes.forEach( (node, index) => {
+    //   node.onclick = this.slideTo(index);
+    // });
+
+    // this.slideTo(0);
+    this.cdRef.detectChanges();
+    this.viewInitComplete = true;
   }
 
   calcSectionY() {
-    return window.scrollY - this.pageOffsets.slice(0, this.pageIndex)
+    return window.scrollY - this.pageOffsets.slice(0, this._sectionIndex)
       .reduce((acc, val) => acc + val, 0);
   }
 
   scrollDown() {
-    this.pageIndex = this.pageIndex < this.pageOffsets.length - 1 ? this.pageIndex + 1 : this.pageIndex;
-    this.scrollToSection(this.pageOffsets[this.pageIndex]);
+    this._sectionIndex = this._sectionIndex < this.pageOffsets.length - 1 ? this._sectionIndex + 1 : this._sectionIndex;
+    this.scrollToSection(this._sectionIndex);
+    this.scroll.emit(this._sectionIndex);
   }
 
   scrollUp() {
-    this.pageIndex = this.pageIndex > 0 ? this.pageIndex - 1 : this.pageIndex;
-    this.scrollToSection(this.pageOffsets[this.pageIndex]);
+    this._sectionIndex = this._sectionIndex > 0 ? this._sectionIndex - 1 : this._sectionIndex;
+    this.scrollToSection(this._sectionIndex);
+    this.scroll.emit(this._sectionIndex);
   }
 
-  scrollToSection(offSet: number) {
-    window.scrollTo({ left: 0, top: offSet, behavior: 'smooth' });
+  scrollToSection(index: number) {
+    window.scrollTo({ left: 0, top: this.pageOffsets[index], behavior: 'smooth' });
+    this.checkArrows();
   }
 
-  ngOnDestroy(): void {
+  checkArrows() {
+    if (this._sectionIndex === 0)
+      this.upArrows.forEach(arrow => {
+        arrow.style.display = 'none';
+      });
+    if (this._sectionIndex === 1)
+      this.upArrows.forEach(arrow => {
+        arrow.style.display = 'block';
+      });
+    if (this._sectionIndex === this.pageOffsets.length - 2)
+      this.downArrows.forEach(arrow => {
+        arrow.style.display = 'block';
+      });
+    if (this._sectionIndex === this.pageOffsets.length - 1)
+      this.downArrows.forEach(arrow => {
+        arrow.style.display = 'none';
+      });
+  }
+
+  ngOnDestroy() {
+    // Release ALL DOM references, new ones will be picked up on next view init
     this.scrollEvents.unsubscribe();
+    this.$windowScroll = null;
+    this.downArrows.forEach((arrow: any) => arrow.onclick = null);
+    this.downArrows = null;
+    this.upArrows.forEach((arrow: any) => arrow.onclick = null);
+    this.upArrows = null;
+    this.anchorNodes = null;
+    this.nativeEl = null;
   }
 
 }

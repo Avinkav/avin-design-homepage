@@ -1,0 +1,9 @@
+<nav class="one-page-nav">
+  <a class="one-page-nav-item" *ngFor="let a of anchors; index as i" 
+  (click)="clickAnchor(i, $event)" 
+  href="#{{ a.title }}">{{ a.title }}</a>
+  <div [style.left]="'0px'" 
+  [style.width]="indicatorWidth" 
+  [style.transform]="indicatorLeft" 
+  class="one-page-indicator"></div>
+</nav>

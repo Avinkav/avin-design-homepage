@@ -7,6 +7,7 @@ $progress-bar-bg:#009688;
 @import "~open-iconic/font/css/open-iconic-bootstrap.scss";
 
 body {
+  color: rgba(0, 0, 0, 0.9);
   min-height: 75rem;
 }
 
@@ -21,7 +22,6 @@ p {
 
 .navbar .navbar-brand {
   margin-top: -1rem;
-  
 }
 
 .navbar-dark {

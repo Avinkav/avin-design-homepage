@@ -2,7 +2,6 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { DesignPhilosophyComponent } from './design-philosophy/design-philosophy.component';
-import { RoutesRoutingModule } from './routes/routes-routing.module';
 import { HomeComponent } from './home/home.component';
 import { SkillsComponent } from './skills/skills.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -21,6 +20,10 @@ import { OnePageDirective } from './directives/one-page.directive';
 import { OnePageSectionDirective } from './directives/one-page-section.directive';
 import { OnePageDownDirective } from './directives/one-page-down.directive';
 import { OnePageUpDirective } from './directives/one-page-up.directive';
+import { routes } from './routes/routes';
+import { RouterModule } from '@angular/router';
+import { OnePageNavDirective } from './directives/one-page-nav.directive';
+import { OnePageNavComponent } from './one-page-nav/one-page-nav.component';
 
 @NgModule({
   declarations: [
@@ -39,11 +42,13 @@ import { OnePageUpDirective } from './directives/one-page-up.directive';
     OnePageDirective,
     OnePageSectionDirective,
     OnePageDownDirective,
-    OnePageUpDirective
+    OnePageUpDirective,
+    OnePageNavDirective,
+    OnePageNavComponent
   ],
   imports: [
     BrowserModule,
-    RoutesRoutingModule,
+    RouterModule.forRoot(routes),
     NgbModule.forRoot(),
     QuillModule,
     FormsModule
