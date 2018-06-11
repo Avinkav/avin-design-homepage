@@ -1,6 +1,6 @@
-# My Blog
+# One-Page
 
-Noting much. Just an SPA blog.
+Just One-Page
 
 ## Development server
 

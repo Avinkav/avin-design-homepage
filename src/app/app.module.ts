@@ -11,6 +11,7 @@ import { OnePageNavDirective } from './directives/one-page-nav.directive';
 import { OnePageNavComponent } from './one-page-nav/one-page-nav.component';
 import { CoverComponent } from './one-page/cover/cover.component';
 import { GmsComponent } from './one-page/gms/gms.component';
+import { SafeHTMLPipe } from './pipes/safe-html.pipe';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -28,7 +29,8 @@ export const routes: Routes = [
     OnePageDownDirective,
     OnePageUpDirective,
     OnePageNavDirective,
-    OnePageNavComponent
+    OnePageNavComponent,
+    SafeHTMLPipe
   ],
   imports: [
     BrowserModule,
