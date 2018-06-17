@@ -36,7 +36,16 @@
   margin-left: -12px;
   background-size: contain;
   background-repeat: no-repeat;
+  @include hover-anim;
   z-index: 1500;
+}
+
+.section-down-arrow{
+  @include hover-anim;
+  z-index: 1501;
+  width: 24px;
+  height: 24px;
+  background-image: url('assets/expand_more.svg');
 }
 
 .one-page-down-arrow {
@@ -55,6 +64,7 @@
   position: fixed;
   top: 1rem;
   right: 1rem;
+  z-index: 1000;
 }
 
 .one-page-indicator{

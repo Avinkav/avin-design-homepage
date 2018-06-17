@@ -12,6 +12,9 @@ import { OnePageNavComponent } from './one-page-nav/one-page-nav.component';
 import { CoverComponent } from './one-page/cover/cover.component';
 import { GmsComponent } from './one-page/gms/gms.component';
 import { SafeHTMLPipe } from './pipes/safe-html.pipe';
+import { CarouselComponent } from './carousel/carousel.component';
+import { CarouselItemDirective } from './carousel/carousel-item.directive';
+import { CarouselDirective } from './carousel/carousel.directive';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -30,7 +33,10 @@ export const routes: Routes = [
     OnePageUpDirective,
     OnePageNavDirective,
     OnePageNavComponent,
-    SafeHTMLPipe
+    SafeHTMLPipe,
+    CarouselComponent,
+    CarouselItemDirective,
+    CarouselDirective
   ],
   imports: [
     BrowserModule,

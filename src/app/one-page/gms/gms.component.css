@@ -1,3 +1,8 @@
 :host{
     background-color: var(--color2);
+    justify-content: space-evenly;
+}
+
+.content{
+    align-items: space-evenly;
 }

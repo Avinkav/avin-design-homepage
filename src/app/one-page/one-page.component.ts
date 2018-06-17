@@ -10,7 +10,7 @@ import { filter } from 'rxjs/operators';
 export class OnePageComponent implements OnInit {
 
   sectionIndex = 0;
-  anchors = [{ title: 'home' }, { title: 'gms' }, { title: 'about' }, { title: 'contact me' }];
+  anchors = [{ title: 'home' }, { title: 'blurb' }, { title: 'about' }, { title: 'contact me' }];
   constructor() { }
 
   ngOnInit() {

@@ -1,11 +1,11 @@
 <div ngxOnePage [sectionIndex]="sectionIndex" (scroll)="sectionIndex = $event">
-  <div ngxOnePageUp></div>
   <ngx-one-page-nav (anchorClick)="sectionIndex = $event" [sectionIndex]="sectionIndex" [anchors]="anchors"></ngx-one-page-nav>
   <app-cover ngxOnePageSection></app-cover>
+
   <app-gms ngxOnePageSection></app-gms>
   <div ngxOnePageSection style="background-color:var(--color4);">
     <div class="content">
-      There's more...
+      or the menu at the top
     </div>
   </div>
   <div ngxOnePageSection style="background-color:var(--color5);"> 
@@ -13,5 +13,4 @@
       less is more...
     </div>
   </div>
-  <div ngxOnePageDown></div>
 </div>

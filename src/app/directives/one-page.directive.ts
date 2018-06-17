@@ -2,18 +2,19 @@ import {
   Directive, ElementRef, Output, TemplateRef, ViewContainerRef, AfterViewInit,
   Input, OnDestroy, ChangeDetectorRef, EventEmitter
 } from '@angular/core';
-import { element } from 'protractor';
+
 import { fromEvent, Observable, Subscription } from 'rxjs';
 import { filter, delay, debounceTime } from 'rxjs/operators';
 import { DOWN_SELECTOR, UP_SELECTOR, PAGE_SELECTOR } from './definitions';
 import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
+import 'hammerjs';
 
 @Directive({
 
   selector: PAGE_SELECTOR
 })
 export class OnePageDirective implements AfterViewInit, OnDestroy {
-  
+
   @Output() scroll = new EventEmitter<number>();
   @Input() delay = 1000;
   @Input()
@@ -33,7 +34,7 @@ export class OnePageDirective implements AfterViewInit, OnDestroy {
 
   pageOffsets: number[];
   $windowScroll: Observable<Event>;
-  scrollEvents: Subscription;
+  events: Subscription;
   viewInitComplete = false;
 
   halfway = window.innerHeight / 2;
@@ -43,7 +44,7 @@ export class OnePageDirective implements AfterViewInit, OnDestroy {
   downArrows;
 
   anchorNodes;
-  nativeEl;
+  nativeEl: HTMLElement;
 
   constructor(el: ElementRef, private cdRef: ChangeDetectorRef) {
     this.nativeEl = el.nativeElement;
@@ -61,7 +62,7 @@ export class OnePageDirective implements AfterViewInit, OnDestroy {
 
     // set up assisted-scrolling
     this.$windowScroll = fromEvent(window, 'scroll');
-    this.scrollEvents = this.$windowScroll.pipe(
+    this.events = this.$windowScroll.pipe(
       debounceTime(this.delay))
       .subscribe(
         event => {
@@ -72,14 +73,27 @@ export class OnePageDirective implements AfterViewInit, OnDestroy {
 
     // Add-handlers to arrows
     this.downArrows = Array.from(this.nativeEl.querySelectorAll(DOWN_SELECTOR));
-    this.downArrows.forEach((arrow: any) => arrow.onclick = () => { this.scrollDown(); });
+    this.downArrows.forEach(arrow => arrow.onclick = () => this.scrollDown());
 
     this.upArrows = Array.from(this.nativeEl.querySelectorAll(UP_SELECTOR));
-    this.upArrows.forEach((arrow: any) => arrow.onclick = () => { this.scrollUp(); });
+    this.upArrows.forEach(arrow => arrow.onclick = () => this.scrollUp());
 
+    const sectionDownArrows = Array.from(this.nativeEl.querySelectorAll<HTMLDivElement>('.section-down-arrow'));
+    sectionDownArrows.forEach(arrow => arrow.onclick = () => this.scrollDown());
     this.checkArrows();
 
     this.cdRef.detectChanges();
+
+    const subscription = fromEvent(window, 'resize').pipe(debounceTime(200)).subscribe(() => {
+      this.halfway = window.innerHeight / 2;
+      this.pageOffsets = Array.from(this.nativeEl.querySelectorAll('.one-page-section'))
+        .map((item: any) => item.offsetTop);
+      this.scrollToSection(this._sectionIndex);
+    });
+
+    this.events.add(subscription);
+
+
     this.viewInitComplete = true;
   }
 
@@ -126,7 +140,7 @@ export class OnePageDirective implements AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     // Release ALL DOM references, new ones will be picked up on next view init
-    this.scrollEvents.unsubscribe();
+    this.events.unsubscribe();
     this.$windowScroll = null;
     this.downArrows.forEach((arrow: any) => arrow.onclick = null);
     this.downArrows = null;
@@ -135,4 +149,6 @@ export class OnePageDirective implements AfterViewInit, OnDestroy {
     this.anchorNodes = null;
     this.nativeEl = null;
   }
+
+
 }

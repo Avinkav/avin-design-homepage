@@ -1,0 +1,73 @@
+@mixin hover-anim {
+  transition: background-color 150ms ease-in;
+  border-radius: 12px;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+@mixin arrow {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  @include hover-anim;
+}
+
+.left-arrow {
+  @include arrow;
+  z-index: 1499;
+  background-image: url('assets/chevron_left.svg');
+}
+
+.right-arrow {
+  @include arrow;
+  z-index: 1499;
+  background-image: url('assets/chevron_right.svg');
+}
+
+.app-carousel {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.app-carousel-viewport{
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.app-carousel-wrapper {
+  height: 100%;
+  display: flex;
+}
+
+.app-carousel-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  margin-top:1rem;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  transition: transform 100ms ease;
+  background-color: rgba(0, 0, 0, 0.6);
+  margin: 0 6px;
+  transform: scale(1);
+}
+
+
+.dot-selected{
+  background-color: rgba(0, 0, 0, 0.8);
+  transform: scale(1.3);
+}
